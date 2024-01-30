@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form>
+        <label for="item">Itam Name</label>
+        <input id="item" type="text">
+        <label for="description"> description</label>
+        <input id="description" type="text">
+        <button type="submit"> Add Item</button>
+    </form>
+    <br>
+    <br>
+
+    <h3> Remaining Item</h3>
+    
+    
+    <ul id="ul1"></ul>
+    
+    <h3> Done Item</h3>
+    <ul id="ul2"></ul>
+
+    
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+<script>
+    let form = document.querySelector('form');
+
+let ul1 = document.getElementById('ul1');
+let ul2 = document.getElementById('ul2');
+
+form.addEventListener('submit', (event)=>{
+    event.preventDefault();
+
+    let obj = {
+        item : event.target.item.value,
+        description : event.target.description.value
+    }
+    // console.log(obj)
+
+    axios.post('https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11', obj)
+    .then(res=>{
+            console.log(res.data)
+            let li = document.createElement('li');
+            
+            li.innerHTML = `Item : ${res.data.item}  Descripton : ${res.data.description} <button onclick="add(event)">✔</button><button data-id="${res.data['_id']}"  onclick="remove(event)">X</button> <br>`
+        
+            ul1.appendChild(li)
+            console.log(document.q)
+    })
+
+
+
+
+})
+
+window.addEventListener('DOMContentLoaded',()=>{
+
+    axios.get('https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11')
+    .then(res=>{
+
+        for(let i = 0; i<res.data.length; i++){
+
+            let li = document.createElement('li');
+              
+            li.innerHTML = `Item : ${res.data[i].item}  Descripton : ${res.data[i].description} <button onclick="add(event)">✔</button><button data-id="${res.data[i]['_id']}" onclick="remove(event)">X</button><br>`
+        
+            ul1.appendChild(li)
+            
+        }
+    })
+
+    axios.get('https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p12')
+    .then(res=>{
+
+        for(let i = 0; i<res.data.length; i++){
+
+            let li = document.createElement('li');
+              
+            li.innerHTML = `Item : ${res.data[i].item}  Descripton : ${res.data[i].description}`
+        
+            ul2.appendChild(li)
+            
+        }
+    })
+
+
+})
+
+function remove(event){
+
+    let id = event.target.getAttribute("data-id")
+    console.log(id)
+
+    axios.delete(`https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11/${id}`)
+    .then(res=>{
+
+     
+        ul1.removeChild(event.target.parentElement)
+    })
+}
+
+async function add(event){
+    let id = event.target.nextSibling.getAttribute("data-id")
+    // console.log(id)
+        
+       let res = await axios.get(`https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11/${id}`)
+        
+       console.log(res.data)
+    let TempData = res.data 
+
+    let tempObj = {
+        item : TempData.item,
+        description : TempData.description
+    }
+
+      await axios.post('https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p12',tempObj)
+
+     await axios.delete(`https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11/${id}`)
+
+     ul1.removeChild(event.target.parentElement);
+
+     let li = document.createElement('li');
+              
+            li.innerHTML = `Item : ${res.data.item}  Descripton : ${res.data.description}`
+        
+            ul2.appendChild(li)
+
+          
+
+
+}
+
+
+
+
+
+
+</script>
+
+</html>
