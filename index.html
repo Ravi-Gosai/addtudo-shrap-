@@ -43,7 +43,7 @@ form.addEventListener('submit', (event)=>{
     }
     // console.log(obj)
 
-    axios.post('https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11', obj)
+    axios.post('https://crudcrud.com/api/d885abbf160f4747860065fc6c97308d/p20', obj)
     .then(res=>{
             console.log(res.data)
             let li = document.createElement('li');
@@ -61,7 +61,7 @@ form.addEventListener('submit', (event)=>{
 
 window.addEventListener('DOMContentLoaded',()=>{
 
-    axios.get('https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11')
+    axios.get('https://crudcrud.com/api/d885abbf160f4747860065fc6c97308d/p20')
     .then(res=>{
 
         for(let i = 0; i<res.data.length; i++){
@@ -75,7 +75,7 @@ window.addEventListener('DOMContentLoaded',()=>{
         }
     })
 
-    axios.get('https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p12')
+    axios.get('https://crudcrud.com/api/d885abbf160f4747860065fc6c97308d/p21')
     .then(res=>{
 
         for(let i = 0; i<res.data.length; i++){
@@ -97,7 +97,7 @@ function remove(event){
     let id = event.target.getAttribute("data-id")
     console.log(id)
 
-    axios.delete(`https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11/${id}`)
+    axios.delete(`https://crudcrud.com/api/d885abbf160f4747860065fc6c97308d/p20/${id}`)
     .then(res=>{
 
      
@@ -109,7 +109,7 @@ async function add(event){
     let id = event.target.nextSibling.getAttribute("data-id")
     // console.log(id)
         
-       let res = await axios.get(`https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11/${id}`)
+       let res = await axios.get(`https://crudcrud.com/api/d885abbf160f4747860065fc6c97308d/p20/${id}`)
         
        console.log(res.data)
     let TempData = res.data 
@@ -119,9 +119,9 @@ async function add(event){
         description : TempData.description
     }
 
-      await axios.post('https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p12',tempObj)
+      await axios.post('https://crudcrud.com/api/d885abbf160f4747860065fc6c97308d/p21',tempObj)
 
-     await axios.delete(`https://crudcrud.com/api/ee958e4fa6b74c5eb5b175353b229d2c/p11/${id}`)
+     await axios.delete(`https://crudcrud.com/api/d885abbf160f4747860065fc6c97308d/p20/${id}`)
 
      ul1.removeChild(event.target.parentElement);
 
